@@ -1,6 +1,372 @@
 @import "../../constraint/variables.scss";
+@import url('https://fonts.googleapis.com/css?family=Kanit');
 
-.parallax-page {
-    background-color: $default-background;
+.fixfixed .fixed-background { 
+    position: absolute !important; 
 }
 
+.parallax-page {
+    // background-color: $default-background;
+
+    $width: 100vw;
+    $heightRatio: 8/16;
+    $heightRatio2: 10/16;
+    $height: calc(#{$heightRatio}*#{$width});
+    $height2: calc(#{$heightRatio2}*#{$width});
+    $new_height: calc(173vw);
+    $connectorWidth: 10px;
+    $connectorSideWidth: 5px;
+    $connectorPadding: 10px;
+    $connectorKnobSize: 60px;
+    $defaultConnectorColor: #21FFFF;
+    $bulletSize: 10px;
+    font-family: 'Kanit', Arial, Helvetica, sans-serif;
+
+    ul.bullet-indicator {
+        position: fixed;
+        top: 50%;
+        right: 5px;
+        transform: translateY(-50%);
+        z-index: 100;
+        list-style-type: none;
+
+        li.bullet-page {
+            color: #AAA;
+            margin-bottom: 20px;
+            &::before {
+                opacity: 0.7;
+                transition: all 0.3;
+                content: " ";
+                width: $bulletSize;
+                height: $bulletSize;
+                border-radius: 50%;
+                background-color: #000;
+                border: 2px solid rgba(255, 255, 255, 0.5);
+                display: block;
+                transform: translateX(-50%);
+            }
+            &:hover {
+                filter: brightness(1.2);
+                opacity: 0.8;
+            }
+            &:active {
+                filter: brightness(0.8);
+                &::before {
+                    opacity: 1;
+                }
+            }
+            &.active {
+                &::before {
+                    width: calc(1.5*#{$bulletSize});
+                    height: calc(1.5*#{$bulletSize});
+                    background-color: #000;
+                    border: 2px solid #FFF;
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    .parallax-wrapper {
+        width: $width;
+        height: $height;
+        position: relative;
+        display: block;
+        margin: auto;
+
+        .content-wrapper {
+            position: absolute;
+            clip: rect(0, $width, $height, 0);
+
+            .overlay-background {
+                position: absolute;
+                width: $width;
+                height: $height;
+                z-index: 5;
+                box-sizing: border-box;
+                background-color: rgba(0, 0, 0, 0.3);
+            }
+            
+            .fixed-background {
+                .fullscreen-bg-video {
+                    min-width: 100vw; 
+                    min-height: 100vh;
+                    width: auto; 
+                    height: auto;
+                    z-index: -100;
+
+                    video {
+                        position: absolute;
+                        top: 100%; 
+                        left: 50%;
+                        -webkit-transform: translateX(-50%) translateY(-50%);
+                        transform: translateX(-50%) translateY(-50%);
+                    }
+                }
+                &.bg1 {
+                    background-image: url('static/images/bg1.jpg');
+                }
+                &.bg2 {
+                    background-image: url('static/images/bg2.jpg');
+                }
+                &.bg3 {
+                    background-image: url('static/images/bg3.png');
+                }
+
+                transform: translate3d(0, 0, 0);
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                position: fixed;
+                top: 0px;
+
+                width: $width;
+                height: 100vh;
+                z-index: -10;
+            }
+
+            .foreground {
+                position: absolute;
+                width: $width;
+                height: $height;
+                z-index: 8;
+                box-sizing: border-box;
+                // background-color: rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        .control-zone {
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 5px;
+            padding: 20px;
+
+            > * {
+                margin: 10px 0px;
+            }
+        }
+
+        .connector {
+            position: absolute;
+            bottom: 0px;
+            left: 50%;
+            transform: translate(-50%, 50%);
+            z-index: 6;
+            width: $connectorWidth;
+            height: $height;
+            opacity: 0.5;
+            transition: opacity 0.2s;
+            background: $defaultConnectorColor;
+            animation: none;
+
+            > .knob {
+                border-radius: 50%;
+                width: $connectorKnobSize;
+                height: $connectorKnobSize;
+                background: $defaultConnectorColor;
+                position: absolute;
+                z-index: 7;
+                &.top {
+                    top: 0px;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+                &.bottom {
+                    bottom: 0px;
+                    left: 50%;
+                    transform: translate(-50%, 50%);
+                }
+                
+            }
+
+            &.active {
+                opacity: 1;
+                animation: 3s infinite alternate circularColor;
+                > .knob {
+                    animation: 3s infinite alternate circularColor;
+                }
+                &::before {
+                    animation: 3s infinite alternate circularColor1;
+                }
+                &::after {
+                    animation: 3s infinite alternate circularColor2;
+                }
+            }
+
+            &::before,
+            &::after {
+                content: " ";
+                position: absolute;
+                transform: translateX(calc(-1*#{$connectorPadding}));
+                // transform: translate(-100px, calc((#{$heightRatio2 - #{$heightRatio}})/(#{$heightRatio} + #{$heightRatio2})*100%));
+                z-index: 6;
+                width: $connectorSideWidth;
+                height: $height;
+                background-color: $defaultConnectorColor;
+                animation: none;
+            }
+
+
+            &::after {
+                transform: translateX(calc(#{$connectorPadding} + #{$connectorWidth} - #{$connectorSideWidth}));
+            }
+
+            &.diff {
+                transform: translate(-50%, calc((#{$heightRatio2})/(#{$heightRatio} + #{$heightRatio2})*100%));
+                height: calc((#{$height} + #{$height2})/2);
+
+                &::before,
+                &::after {
+                    height: calc((#{$height} + #{$height2})/2);
+                }
+            }
+        }
+    }
+
+    @keyframes circularColor {
+        0% { background: #F9A5DE;}
+        50% { background: #8484F0;}
+        100% { background: #FFBB77;}
+    }
+    @keyframes circularColor1 {
+        0% { background: #8484F0;}
+        50% { background: #FFBB77;}
+        100% { background: #F9A5DE;}
+    }
+    @keyframes circularColor2 {
+        0% { background: #FFBB77;}
+        50% { background: #F9A5DE;}
+        100% { background: #8484F0;}
+    }
+
+    .t-box {
+        background-color: rgba(255, 255, 255, 0.3);
+        box-sizing: border-box;
+        margin: 0 auto;
+        // min-width: 80vw;
+        // max-width: 80vw;
+        // // height: 30vw;
+        padding: 10px;
+        border-radius: 5px;
+        padding: 30px;
+    }
+
+    .w-box {
+        background-color: rgba(255, 255, 255, 1);
+        padding: 20px;
+        box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);
+        max-width: calc(600px + 52.3px + 20px);
+        width: calc(60vw);
+    }
+
+    .name-search-box {
+        z-index: 8;
+        max-width: 70vw;
+        max-width: calc(600px + 52.3px + 20px);
+        width: calc(60vw);
+        * {
+            margin: 5px 0px;
+        }
+    }
+
+    .result-box {
+        z-index: 8;
+        max-width: 70vw;
+        height: 80%;
+        * {
+            margin: 5px 0px;
+        }
+    }
+
+    img.logo {
+        width: 80vw;
+        max-width: 600px;
+    }
+
+    div.parallax-wrapper.height2 {
+        height: $height2;
+
+        div.content-wrapper {
+            clip: rect(0, $width, $height2, 0);
+
+            .overlay-background {
+                height: $height2;
+            }
+
+            .foreground {
+                height: $height2;
+            }
+        }
+    }
+
+    @media all and (max-width: 700px) and (min-width: 481px) {
+        $heightRatio: 11/16;
+        $height: calc(#{$heightRatio}*#{$width});
+
+        div.parallax-wrapper {
+            height: $height !important;
+
+            div.content-wrapper {
+                clip: rect(0, $width, $height, 0) !important;
+
+                .overlay-background {
+                    height: $height !important;
+                }
+
+                .foreground {
+                    height: $height !important;
+                }
+            }
+
+            .connector {
+                height: $height !important;
+
+                &::before, &::after {
+                    height: $height !important;
+                }
+
+                &.diff {
+                    transform: translate(-50%, calc((#{$heightRatio2})/(#{$heightRatio} + #{$heightRatio2})*100%));
+                    height: calc((#{$height} + #{$height2})/2);
+
+                    &::before,
+                    &::after {
+                        height: calc((#{$height} + #{$height2})/2);
+                    }
+                }
+            }
+        }
+    }
+
+    @media all and (max-width: 480px) {
+
+        .t-box {
+            min-width: 90vw;
+            max-width: 90vw;
+            height: calc(0.7*#{$new_height});
+        }
+
+        div.parallax-wrapper {
+            height: $new_height !important;
+
+            div.content-wrapper {
+                clip: rect(0, $width, $new_height, 0) !important;
+
+                .overlay-background {
+                    height: $new_height !important;
+                }
+
+                .foreground {
+                    height: $new_height !important;
+                }
+            }
+
+            .connector {
+                height: $new_height !important;
+
+                &::before, &::after {
+                    height: $new_height !important;
+                }
+            }
+        }
+    }
+}

@@ -5,7 +5,13 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.17.1",
+    "babel-plugin-module-resolver": "2.5.0",
+    "babel-plugin-wrap-in-js": "^1.1.0",
+    "fuse.js": "^3.2.0",
+    "glob": "7.1.1",
     "isomorphic-style-loader": "^4.0.0",
+    "jquery": "^3.2.1",
+    "json-stringify-safe": "^5.0.1",
     "moment": "^2.19.2",
     "next": "^4.1.4",
     "next-redux-wrapper": "^1.3.4",
@@ -17,10 +23,7 @@
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
-    "styled-components": "^2.2.3",
-    "babel-plugin-module-resolver": "2.5.0",
-    "babel-plugin-wrap-in-js": "^1.1.0",
-    "glob": "7.1.1"
+    "styled-components": "^2.2.3"
   },
   "scripts": {
     "start": "next",
@@ -28,14 +31,14 @@
     "deploy": "next start"
   },
   "devDependencies": {
-    "now": "^3.1.0",
+    "autoprefixer": "6.7.6",
     "node-sass": "^4.4.0",
     "normalize.css": "5.0.0",
+    "now": "^3.1.0",
     "postcss-easy-import": "2.0.0",
     "postcss-loader": "1.3.3",
     "raw-loader": "^0.5.1",
-    "sass-loader": "^4.1.1",
-    "autoprefixer": "6.7.6"
+    "sass-loader": "^4.1.1"
   },
   "description": "## Gettting start --- just use `npm` or `yarn` ``` npm install ``` or ``` yarn install ```",
   "repository": {

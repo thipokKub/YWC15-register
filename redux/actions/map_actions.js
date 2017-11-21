@@ -1,5 +1,6 @@
 import * as types from '../types';
 import { store } from '../store';
+import { noCircularObj } from '../../function/general';
 
 /**
  * Name: requestMapId
@@ -31,7 +32,7 @@ export function requestMapId(fieldName, id, promiseFunc) {
                         payload: {
                             fieldName: fieldName,
                             id: id,
-                            data: data
+                            data: {...data}
                         }
                     })
                 }).catch((e) => {
@@ -40,7 +41,7 @@ export function requestMapId(fieldName, id, promiseFunc) {
                         payload: {
                             fieldName: fieldName,
                             id: id,
-                            data: e
+                            data: noCircularObj(e)
                         }
                     })
                 });

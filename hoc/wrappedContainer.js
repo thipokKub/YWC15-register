@@ -6,9 +6,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import rootActions from '../redux/actions/index';
 
+function TypeFunc(obj) {
+    return typeof obj === "function";
+}
+
 export default function (ComposedComponent, params) {
 
-    const initialState = _.get(params, 'initialState');
     const stylesheets = _.get(params, 'stylesheets');
 
     class wrappedContainer extends Component {
@@ -16,7 +19,6 @@ export default function (ComposedComponent, params) {
         constructor(props) {
             super(props);
             this.state = {
-                ...((initialState) ? initialState : {}),
                 hasError: false
             }
             this.onSetState = this.onSetState.bind(this);
@@ -48,6 +50,7 @@ export default function (ComposedComponent, params) {
         }
 
         render() {
+            console.log(this.props);
             const alternative = _.get(params, 'onErrorJSX', () => <span>{`Sorry, something went wrong :-(`}</span>);
             if (this.state.hasError) {
                 return alternative(this.props);

@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import Head from 'next/head';
 import _ from 'lodash';
 
+function TypeFunc(obj) {
+    return typeof obj === "function";
+}
+
 export default function (ComposedComponent, params) {
 
-    const initialState = _.get(params, 'initialState');
     const stylesheets = _.get(params, 'stylesheets');
 
     class wrappedComponent extends Component {
@@ -12,7 +15,6 @@ export default function (ComposedComponent, params) {
         constructor(props) {
             super(props);
             this.state = {
-                ...((initialState) ? initialState : {}),
                 hasError: false
             }
             this.onSetState = this.onSetState.bind(this);
