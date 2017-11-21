@@ -26,9 +26,10 @@
     "styled-components": "^2.2.3"
   },
   "scripts": {
-    "start": "next",
+    "start": "next start -p $PORT",
     "build": "next build",
-    "deploy": "next start"
+    "postinstall": "next build",
+    "dev": "next"
   },
   "devDependencies": {
     "autoprefixer": "6.7.6",
