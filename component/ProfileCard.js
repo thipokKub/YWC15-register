@@ -4,10 +4,10 @@ import { random, onSetState } from '../function/general';
 import OutsideClick from './OutsideClick';
 
 const color = {
-    "programming": "#1AC297",
-    "content": "#1590EC",
-    "design": "#EEE611",
-    "marketing": "#E11726"
+    "programming": "#58A692",
+    "content": "#144DC9",
+    "design": "#202D53",
+    "marketing": "#5D000F"
 }
 
 const CardFlip = styled.div`
@@ -147,8 +147,7 @@ class ProfileCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isActive: false,
-            image: `static/images/avatars/${random(1, 16)}.svg`
+            isActive: false
         }
         this.onClick = this.onClick.bind(this);
         this.onResetState = this.onResetState.bind(this);
@@ -172,6 +171,18 @@ class ProfileCard extends Component {
 
     render() {
         const props = this.props;
+        const Src = (() => {
+            switch(props.major) {
+                case "programming":
+                    return "static/images/major/programming.png"
+                case "marketing":
+                    return "static/images/major/marketing.png"
+                case "design":
+                    return "static/images/major/design.png"
+                case "content":
+                    return "static/images/major/content.png"
+            }
+        })();
         return (
             <CardFlip>
                 <OutsideClick
@@ -180,7 +191,7 @@ class ProfileCard extends Component {
                     <div className={`flipper ${this.state.isActive ? 'active' : ''}`} onClick={this.onClick}>
                         <div className="front">
                             <ProfileCardStyle
-                                src={this.state.image}
+                                src={Src}
                                 color={color[props.major]}
                             >
                                 <div className="profileImg">
@@ -200,7 +211,11 @@ class ProfileCard extends Component {
                                 color={color[props.major]}
                             >
                                 <div className="code">
-                                    <span>Interview code</span>
+                                    <span
+                                        style={{
+                                            color: '#FFF'
+                                        }}
+                                    >Interview code</span>
                                     <span>{props.interviewRef}</span>
                                 </div>
                             </ProfileCardStyle>

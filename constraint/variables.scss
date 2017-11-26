@@ -1,1 +1,9 @@
-$default-background: #F1F1F1;
+$default-background: #182C4D;
+
+@mixin diag-grad($top-left, $bottom-right) {
+    background: $top-left;
+    background: -webkit-linear-gradient(left top, $top-left, $bottom-right);
+    background: -o-linear-gradient(bottom right, $top-left, $bottom-right);
+    background: -moz-linear-gradient(bottom right, $top-left, $bottom-right);
+    background: linear-gradient(to bottom right, $top-left, $bottom-right);
+}

@@ -1,12 +1,27 @@
+@import "../../constraint/variables.scss";
+
 html, body {
     padding: 0;
     margin: 0;
+    background-color: $default-background;
+}
+
+.flex {
+    display: flex;
 }
 
 .flex-center {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.flex-row {
+    flex-direction: row;
 }
 
 .flex-wrap {
@@ -23,4 +38,27 @@ html, body {
 
 .text-center {
     text-align: center;
+}
+
+.no-margin {
+    margin: 0px;
+}
+
+button.directional {
+    background: none;
+    border:none;
+    font-size: 2em;
+    color: #000;
+
+    &:focus {
+        outline-width: 0;
+    }
+
+    &:hover {
+        color: #AAA;
+    }
+
+    &:active {
+        color: #777;
+    }
 }
